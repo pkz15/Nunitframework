@@ -8,11 +8,7 @@ namespace NUnitAutomationFramework.Utility
 
         public static string GetTestData(string testcase_id, string node_element)
         {
-            /*
-             * Use this method to read testdata for respective testcase
-             * Pass the testcase-id and element name for which user need a data. 
-             * Ex: Node Element = "TestData" , Node Element = "Username"
-             */
+            
             Value = "";
             try
             {

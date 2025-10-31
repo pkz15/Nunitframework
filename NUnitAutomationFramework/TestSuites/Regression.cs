@@ -2,6 +2,8 @@
 using NUnitAutomationFramework.Base;
 using NUnitAutomationFramework.Pages;
 using NUnitAutomationFramework.Utility;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace NUnitAutomationFramework.TestSuites
 {
@@ -9,39 +11,33 @@ namespace NUnitAutomationFramework.TestSuites
     public class Regression : BaseSetup
     {
         [Test, Category("Regression")]
-        public void TC001_OpenTab()
+        public void ExploreMoreValidation()
         { 
             string? testcase = TestContext.CurrentContext.Test.MethodName;
-            string testdata = ReadTestData.GetTestData(testcase, "TestData");
-            extent_test.Value.Info("Testdata is : " +testdata);
-
-            string user = ReadUsers.UserList("Registered_User");
-            extent_test.Value.Info("Testdata is : " + user);
-         
             HomePage page = new(GetDriver(), extent_test.Value);
-            page.OpenTab();
-            extent_test.Value.Pass("Open Tab Testcase is passed");
+            page.OpenExploreMore();
+            extent_test.Value.Pass("Open Explore Tab Testcase is passed");
         }
 
-        [Test, Category("Regression")]
-        public void TC002_MouseOver()
+        [Test ,Category("Regression")]
+        public void FillContactUsForm()
         {
-            //To get testdata from xml file
             string? testcase = TestContext.CurrentContext.Test.MethodName;
-            string testdata = ReadTestData.GetTestData(testcase, "TestData");
-            extent_test.Value.Info("Testdata is : " + testdata);
+            var contactPage = new ContactSale(GetDriver(), extent_test.Value);
+            contactPage.ClickContactSaleButton();
+            contactPage.SelectHelpOption("Careers or HR Inquiry");
+            contactPage.EnterEmail("testuser@gmail.com");
+            contactPage.EnterFirstName("Prem");
+            contactPage.EnterLastName("M");
+            contactPage.EnterCompany("TestCompany");
+            contactPage.EnterJobTitle("QA Automation Engineer");
+            contactPage.EnterPhone("9876543210");
+            contactPage.SelectCountry("United States");
+            contactPage.SelectState("Florida");
+            contactPage.CheckConsent();
+            extent_test.Value.Pass("Form Filling Completed Passed...");
 
-            //To get user from testdata file
-            string username = ReadTestData.GetTestData(testcase, "Username");
-            extent_test.Value.Info("Username from xml file is : " + username);
 
-            // To get User from UserList file
-            string user = ReadUsers.UserList("Registered_User");
-            extent_test.Value.Info("user is : " + user);
-
-            HomePage page = new(GetDriver(), extent_test.Value);
-            page.MouseOver();
-            extent_test.Value.Pass("MouseOver Testcase is passed");
         }
     }
 }

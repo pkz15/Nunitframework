@@ -1,19 +1,6 @@
 ﻿{
   "QA": {
-    "WebURL": "https://rahulshettyacademy.com/AutomationPractice/",
-    "BaseAPI": "192.0.0.0/baseurl",
-    "DataBaseURL": "192.0.0.0/DB"
-  },
-
-  "UAT": {
-    "WebURL": "https://rahulshettyacademy.com/AutomationPractice/",
-    "BaseAPI": "192.0.0.0/baseurl",
-    "DataBaseURL": "192.0.0.0/DB"
-  },
-
-  "PROD": {
-    "WebURL": "https://rahulshettyacademy.com/AutomationPractice/",
-    "BaseAPI": "192.0.0.0/baseurl",
-    "DataBaseURL": "192.0.0.0/DB"
+    "WebURL": "https://www.hitachivantara.com/en-us/home"
   }
+
 }

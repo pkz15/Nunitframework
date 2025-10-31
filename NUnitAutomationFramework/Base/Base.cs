@@ -24,8 +24,10 @@ namespace NUnitAutomationFramework.Base
             string? testclassfilename = TestContext.CurrentContext.Test.ClassName;
             string dir = System.Environment.CurrentDirectory;
             string? projdir = Directory.GetParent(dir)?.Parent?.Parent?.FullName;
-            string reporpath = projdir + "\\Reports\\Report.html";
-            var htmlreport = new ExtentHtmlReporter(reporpath);
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            string reportPath = Path.Combine(projdir, "Reports", $"ExtentReport_{timestamp}.html");
+            //string reporpath = projdir + "\\Reports\\Report.html";
+            var htmlreport = new ExtentSparkReporter(reportPath);
             extent = new ExtentReports();
             extent.AttachReporter(htmlreport);
             extent.AddSystemInfo("Enivorment", "QA");
@@ -58,10 +60,6 @@ namespace NUnitAutomationFramework.Base
 
                 driver.Value = DriverSetup.LocalBrowserSetup(driver.Value);
             }
-            else if (RunEnivorment != null && RunEnivorment.Equals("Remote"))
-            {
-                driver.Value = DriverSetup.RemoteBrowserSetup(driver.Value);
-            }
             else
             {
                 TestContext.Progress.WriteLine("Please check browser name and run enivorment value in app.config file");
@@ -72,6 +70,7 @@ namespace NUnitAutomationFramework.Base
         [TearDown]
         public void SetTestResults()
         {
+            driver.Value.Quit();
             var status = TestContext.CurrentContext.Result.Outcome.Status;
 
             if (status == TestStatus.Failed)
@@ -79,24 +78,24 @@ namespace NUnitAutomationFramework.Base
                 var stackTrace = TestContext.CurrentContext.Result.StackTrace;
                 DateTime date = DateTime.Now;
                 string Filename = "Screenshot_" + date.ToString("h_mm_ss") + ".png";
-                extent_test?.Value?.Fail("TestCase Status : Failed", CaptureScreenShot(driver.Value, Filename));
+                //extent_test?.Value?.Fail("TestCase Status : Failed", CaptureScreenShot(driver.Value, Filename));
                 extent_test?.Value?.Fail(stackTrace);
             }
             else if (status == TestStatus.Passed)
             {
-                extent_test.Value.Log(Status.Pass, MarkupHelper.CreateLabel("TestCase Status : " + status, ExtentColor.Green));
+                extent_test.Value.Log(Status.Pass, "TestCase Status : " + status);
             }
             extent.Flush();
-            driver.Value.Quit();
+           
         }
 
-        public static MediaEntityModelProvider CaptureScreenShot(IWebDriver driver, string screenShotName)
-        {
-            ITakesScreenshot scr = (ITakesScreenshot)driver;
-            var screenshot = scr.GetScreenshot().AsBase64EncodedString;
+        //public static MediaEntityModelProvider CaptureScreenShot(IWebDriver driver, string screenShotName)
+        //{
+        //    ITakesScreenshot scr = (ITakesScreenshot)driver;
+        //    var screenshot = scr.GetScreenshot().AsBase64EncodedString;
 
-            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
-        }
+        //    return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
+        //}
 
     }
 }
