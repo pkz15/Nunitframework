@@ -27,7 +27,7 @@ namespace NUnitAutomationFramework.Pages
             //Thread.Sleep(2000);
             IWebElement heading = driver.FindElement(By.XPath(HeadingValidating));
             string HeadingText=heading.Text;
-            Assert.AreEqual("The Data Foundation.", HeadingText);
+            Assert.AreEqual("The Data Foundations.", HeadingText);
         }
         
     }

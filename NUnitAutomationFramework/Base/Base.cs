@@ -1,5 +1,5 @@
 ﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.MarkupUtils;
+using AventStack.ExtentReports.Model;
 using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -70,7 +70,6 @@ namespace NUnitAutomationFramework.Base
         [TearDown]
         public void SetTestResults()
         {
-            driver.Value.Quit();
             var status = TestContext.CurrentContext.Result.Outcome.Status;
 
             if (status == TestStatus.Failed)
@@ -78,7 +77,7 @@ namespace NUnitAutomationFramework.Base
                 var stackTrace = TestContext.CurrentContext.Result.StackTrace;
                 DateTime date = DateTime.Now;
                 string Filename = "Screenshot_" + date.ToString("h_mm_ss") + ".png";
-                //extent_test?.Value?.Fail("TestCase Status : Failed", CaptureScreenShot(driver.Value, Filename));
+                extent_test?.Value?.Fail("TestCase Status : Failed", CaptureScreenShot(driver.Value, Filename));
                 extent_test?.Value?.Fail(stackTrace);
             }
             else if (status == TestStatus.Passed)
@@ -86,16 +85,16 @@ namespace NUnitAutomationFramework.Base
                 extent_test.Value.Log(Status.Pass, "TestCase Status : " + status);
             }
             extent.Flush();
-           
+            driver.Value.Quit();
         }
 
-        //public static MediaEntityModelProvider CaptureScreenShot(IWebDriver driver, string screenShotName)
-        //{
-        //    ITakesScreenshot scr = (ITakesScreenshot)driver;
-        //    var screenshot = scr.GetScreenshot().AsBase64EncodedString;
+        public static Media CaptureScreenShot(IWebDriver driver, string screenShotName)
+        {
+            ITakesScreenshot scr = (ITakesScreenshot)driver;
+            var screenshot = scr.GetScreenshot().AsBase64EncodedString;
 
-        //    return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
-        //}
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
+        }
 
     }
 }
