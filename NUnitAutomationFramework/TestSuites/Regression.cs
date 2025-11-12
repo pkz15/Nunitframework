@@ -7,7 +7,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace NUnitAutomationFramework.TestSuites
 {
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class Regression : BaseSetup
     {
         [Test, Category("Regression")]

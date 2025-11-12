@@ -30,14 +30,14 @@ namespace NUnitAutomationFramework.Pages
         private readonly By countryDropdown = By.XPath("//form[@id='mktoForm_1028']//select[@id='Country']");
         private readonly By stateDropdown = By.XPath("//form[@id='mktoForm_1028']//select[@id='State']");
         private readonly By consentCheckbox = By.XPath("//input[@id='mktoCheckbox_10921_0']");
-        private readonly By ContactSaleButton = By.XPath("//span[normalize-space()='Contact Saless']");
+        private readonly By ContactSaleButton = By.XPath("//span[normalize-space()='Contact Sales']");
         private readonly By ExploreMore = By.XPath("//span[normalize-space()='Explore More']");
         private readonly By ClosePopUp = By.ClassName("close-exit-intent");
 
         public void ClickContactSaleButton()
         {
             driver.FindElement(ExploreMore).Click();
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             try { driver.FindElement(ContactSaleButton).Click(); }
             catch (Exception e) {
                 driver.FindElement(ClosePopUp).Click();
